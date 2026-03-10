@@ -228,9 +228,9 @@ See the [Implementation Guide](./docs/GUIDE.md) for step-by-step instructions on
 
 ## Why MCP Prevents the AI Black Box
 
-As AI coding agents generate, modify, and orchestrate production systems, traditional developer visibility erodes. AI writes code that calls other AI-generated code, which integrates black-box models, which invoke external tools in ways that even the original developer can't fully trace. The result: systems become **opaque to the very teams responsible for them** — making debugging, compliance, bias detection, and security audits exponentially harder.
+As AI agents orchestrate production systems, the gap between intent and execution becomes opaque. An agent reasons internally, proposes an action, and executes it on external infrastructure — but without a structured protocol at the execution boundary, there is no inspectable record of *what* was requested, *why*, or *whether the outcome matched the intent*. For trust-sensitive domains like finance, procurement, and carbon verification, this opacity is unacceptable.
 
-Trellis MCP directly counters this by enforcing a **structured, auditable interface** between AI agents and the outside world:
+Trellis MCP solves this at the execution boundary — exactly where opaque reasoning meets real-world action:
 
 **Standardized tool contracts.** MCP isn't loose prompt-based tool calling. It's a client-server protocol with explicit schemas, parameter definitions, and constraints. Agents discover tools dynamically, request them in structured JSON-RPC format, and receive predictable responses. Developers and auditors can inspect exact tool interfaces, inputs/outputs, and invocation logs without diving into a model's internal weights.
 
@@ -242,7 +242,9 @@ Trellis MCP directly counters this by enforcing a **structured, auditable interf
 
 **Preventing agentic drift.** Over successive autonomous iterations, AI agents can gradually move system behavior away from intended parameters in ways that are individually small but collectively significant and untraceable. Trellis MCP's fixed-contract tool interfaces and per-action ledger attestation make drift *detectable by design*, not just in retrospect.
 
-With regulations like the EU AI Act demanding transparency, traceability, and contestability for high-risk systems, platforms without enforced structure face real friction — slower adoption, higher compliance costs, or outright deployment bans. MCP-based approaches like Trellis turn agentic AI from a liability into an asset: faster development **without** sacrificing governance.
+Critically, the LLM's internal reasoning opacity is **irrelevant** in this architecture. The model has no unmediated authority — it can only call tools with defined parameters through the MCP protocol, and every resulting action is validated by deterministic layers below. The LLM proposes; the ledger disposes. You don't need to audit the AI's reasoning when you can audit every action it takes.
+
+This creates a new category of attestable AI infrastructure. Each domain verified on Trellis strengthens every other domain on the platform — the same methodology PwC applies to procurement governance transfers directly to carbon verification, supply chain, and healthcare at decreasing cost and increasing confidence. Trust compounds with adoption.
 
 ---
 

@@ -895,6 +895,62 @@ Agent response:
    audit trail available on topic 0.0.XXXXX."
 ```
 
+### 5.7 Countering the AI Black Box
+
+As AI agents orchestrate production systems, the gap between intent and execution becomes opaque. An agent reasons internally, proposes an action, and executes it on external infrastructure — but without a structured protocol at the execution boundary, there is no inspectable record of what was requested, why, or whether the outcome matched the intent.
+
+This is the **agentic black box** problem. Trellis MCP's architecture directly counters it at the execution boundary — exactly where opaque reasoning meets real-world action — through four structural properties:
+
+#### 5.7.1 Auditable Execution Boundary
+
+The real danger of AI opacity isn't the LLM's internal reasoning — regulators increasingly accept that neural networks are not fully interpretable. The danger is when **opaque reasoning leads to opaque actions**. EU AI Act Article 14 (human oversight) and Article 13 (transparency) regulate the *decision-to-action boundary*, not the weights.
+
+MCP draws a hard, inspectable line at exactly this point. Every tool call is a structured JSON-RPC request with explicit parameters, and every response is a structured result. This creates a complete, machine-readable audit trail at the execution layer — exactly where black-box risk becomes most dangerous.
+
+#### 5.7.2 Composable Trust Through Layer Independence
+
+A monolithic AI system is a single black box. Trellis MCP's five independent layers are five independently attestable components:
+
+- **Layer 1** can be verified against Hiero SDK behavior (deterministic)
+- **Layer 2** can be verified against Guardian policy rules (deterministic)  
+- **Layer 3** can be verified against asset type state machines (deterministic)
+- **Layer 4** can be verified against domain validation rules (deterministic)
+- **Layer 5** can be verified against tool call logs and ledger receipts (auditable)
+
+This composability means transparency compounds: you don't need to understand the AI agent's internal reasoning to verify that a specific action was authorized, valid, and correctly executed. PwC can audit Layer 1 hashgraph operations separately from Layer 5 agent tool behavior — the same methodology that applies to traditional financial audits.
+
+#### 5.7.3 Detecting Agentic Drift
+
+Over successive autonomous iterations, AI agents can gradually move system behavior away from intended parameters. Each individual deviation may be small and individually rational, but collectively they can produce significant, untraceable divergence from design intent — a phenomenon we call **agentic drift**.
+
+Trellis MCP makes drift detectable by design through two mechanisms:
+
+1. **Fixed-contract tool interfaces**: Tool schemas are defined at deployment, not generated at runtime. An agent cannot create new tool behavior — it can only call tools with defined parameters. This bounds the space of possible actions.
+
+2. **Per-action ledger attestation**: Every meaningful action produces a ledger receipt with consensus timestamp. Drift analysis becomes a query over timestamped, structured records rather than an archaeological excavation of opaque logs.
+
+#### 5.7.4 LLM Opacity Is Irrelevant
+
+The LLM's internal reasoning will always contain some opacity — neural networks are not fully interpretable. But in Trellis MCP's architecture, this opacity is **irrelevant** because the model has no unmediated authority. It can only call tools with defined parameters through the MCP protocol, and every resulting action is validated by the deterministic layers below.
+
+The LLM proposes; the ledger disposes.
+
+You don't need to audit the AI's reasoning when you can audit every action it takes. The execution boundary is the accountability boundary, and it is fully inspectable.
+
+#### 5.7.5 Compounding Attestation Value
+
+Regulatory frameworks like the EU AI Act (2024) set a compliance floor — transparency, traceability, and contestability for high-risk AI systems. Trellis MCP meets these requirements structurally:
+
+| Regulatory Requirement | Trellis MCP Mechanism |
+|----------------------|---------------------|
+| **Transparency** (Art. 13) | Structured tool schemas with explicit descriptions, discoverable by inspection |
+| **Human oversight** (Art. 14) | Intent Pattern for destructive operations, two-phase commit with human approval |
+| **Traceability** (Art. 12) | Per-action ledger receipts with consensus timestamps, immutable audit trails |
+| **Contestability** | On-chain evidence enables independent verification of any agent action |
+| **Risk management** (Art. 9) | Layer-by-layer bounded scope prevents monolithic risk accumulation |
+
+But compliance is the floor. The ceiling is that each domain attested on Trellis creates a reusable attestation methodology that transfers to the next domain at reduced cost. PwC attests procurement governance across Layers 1–5. The same methodology applies to carbon verification, supply chain, healthcare — at decreasing cost and increasing confidence. This creates a **compounding trust network** that no single-domain solution can replicate.
+
 ---
 
 ## 6. Verification Model
